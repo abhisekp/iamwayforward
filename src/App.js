@@ -12,7 +12,7 @@ function App() {
             </p>
           </h1>
           <p className="App-content">We provide an unique ecosystem of <strong><em>guided Entrepreneurship</em></strong> to help you become an Entrepreneur. <br />
-            <em>Fill-in the form below if you're interested in <strong>Mentorship</strong> based Partnership.</em> <br />
+            <em>Fill-in the form below if you're interested in <strong>Mentorship based Partnership.</strong></em> <br />
             <span role="img" aria-label="scroll down">👇 👇 👇</span>
           </p>
         </div>
