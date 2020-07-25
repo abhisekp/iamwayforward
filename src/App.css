@@ -27,7 +27,8 @@ html, body {
   background-image: url('./iamwayforward_logo_landscape_lowres.jpg');
   background-position: center;
   background-size: contain;
-  /* background-clip: border-box; */
+  background-attachment: fixed;
+  background-repeat: repeat-y;
 }
 
 .App-header .App-container {
