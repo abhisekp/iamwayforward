@@ -11,7 +11,7 @@ function App() {
               <span className="App-subtitle"><em>Let's become successful together</em></span>
             </p>
           </h1>
-          <p className="App-content">We provide a unique ecosystem of <strong><em>guided Entrepreneurship</em></strong> to help you become an Entrepreneur. <br />
+          <p className="App-content">We provide an unique ecosystem of <strong><em>guided Entrepreneurship</em></strong> to help you become an Entrepreneur. <br />
             <em>Fill-in the form below if you're interested in <strong>Mentorship</strong> based Partnership.</em> <br />
             <span role="img" aria-label="scroll down">👇 👇 👇</span>
           </p>

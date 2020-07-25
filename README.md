@@ -7,4 +7,4 @@ Visit [**iamwayforward.in**](https://iamwayforward.in) to get started.
 
 ----
 
-![iamwayforward business mentorship and enterpreneurship logo](src/iamwayforward_logo_transparent.png)
+[![iamwayforward business mentorship and enterpreneurship logo](src/iamwayforward_logo_transparent.png)](https://iamwayforward.in)
