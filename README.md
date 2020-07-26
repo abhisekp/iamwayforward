@@ -1,4 +1,4 @@
-# iamwayforward ![Deploy to gh-pages](https://github.com/abhisekp/iamwayforward/workflows/Deploy%20to%20gh-pages/badge.svg?branch=master)  
+# iamwayforward [![copyright license](https://img.shields.io/badge/license-SEE%20LICENSE%20IN%20LICENSE-red)](LICENSE) ![Deploy to gh-pages](https://github.com/abhisekp/iamwayforward/workflows/Deploy%20to%20gh-pages/badge.svg?branch=master)  
 
 > Business Partnership and Mentorship Program.  
 We provide an unique ecosystem of ***guided Entrepreneurship*** to help you become an Entrepreneur.
