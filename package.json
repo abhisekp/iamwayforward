@@ -6,22 +6,57 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/bootstrap": "^4.5.0",
+    "@types/jest": "^26.0.7",
+    "@types/node": "^14.0.26",
+    "@types/node-sass": "^4.11.1",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/reactstrap": "^8.5.0",
+    "@types/testing-library__jest-dom": "^5.9.1",
+    "@types/testing-library__react": "^10.2.0",
+    "@types/testing-library__user-event": "^4.2.0",
+    "@types/typescript": "^2.0.0",
+    "bootstrap": "^4.5.0",
+    "cross-env": "^7.0.2",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "reactstrap": "^8.5.1",
+    "typescript": "^3.9.7"
   },
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://iamwayforward.in",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env NODE_PATH=./ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "eslint --cache --ext .js,.ts,.tsx,.jsx .",
+    "lint:fix": "eslint --cache --fix --ext .js,.ts,.tsx,.jsx .",
+    "format": "prettier-eslint --write $PWD/'**/*.[jt]s?(x)'",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,md}": [
+      "prettier-eslint --write",
+      "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles --findRelatedTests"
+    ],
+    "*.{png,jpeg,jpg,gif,svg}": [
+      "imagemin-lint-staged"
+    ],
+    "*.css": "stylelint",
+    "*.scss": "stylelint --syntax=scss"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again"
+    }
   },
   "browserslist": {
     "production": [
@@ -36,6 +71,20 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "@types/eslint": "^7.2.0",
+    "@types/gh-pages": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "gh-pages": "^3.1.0",
+    "husky": "^4.2.5",
+    "imagemin-lint-staged": "^0.4.0",
+    "lint-staged": "^10.2.11",
+    "prettier-eslint-cli": "^5.0.0",
+    "ts-jest": "^26.4.0"
   }
 }

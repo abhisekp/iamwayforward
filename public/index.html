@@ -34,9 +34,194 @@
 
     gtag('config', 'G-SJGGN3CCT5');
   </script>
+
 </head>
 
 <body>
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.21.0/firebase-firestore.js"></script>
+  
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMVUgQ3ngX06XQp2M42XtLU-7yX5cPMZ8",
+      authDomain: "iamwayforward-f1d49.firebaseapp.com",
+      databaseURL: "https://iamwayforward-f1d49.firebaseio.com",
+      projectId: "iamwayforward-f1d49",
+      storageBucket: "iamwayforward-f1d49.appspot.com",
+      messagingSenderId: "998291643430",
+      appId: "1:998291643430:web:605435ee17f8acdec39ae7",
+      measurementId: "G-BM61L1NJQ6"
+    };
+    try {
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig); 
+
+      try {
+        firebase.analytics();
+      } catch (error) {
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  </script>
+  
+  <script>
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().useDeviceLanguage();
+    provider.addScope('profile');
+    provider.addScope('email');
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        console.log({ user })
+        return;
+      }
+
+      console.log('user logged out');
+    });
+
+    firebase.auth().getRedirectResult().then(function (result) {
+      if (result.credential) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+      }
+      // The signed-in user info.
+      var user = result.user;
+      // ...
+      console.log({ token, user });
+    }).catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+      console.error({
+        errorCode,
+        errorMessage,
+        email,
+        credential
+      })
+    });
+
+    firebase.auth().signInAnonymously().catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // ...
+    });
+
+    function logout() {
+      firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+      }).catch(function (error) {
+        // An error happened.
+      });
+    }
+
+    function loginRedirect() {
+      firebase.auth().signInWithRedirect(provider)
+    }
+
+    function loginPopup() {
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        // ...
+        console.log({ token, user });
+      }).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+        console.error({
+          errorCode,
+          errorMessage,
+          email,
+          credential
+        })
+      });
+    }
+  </script>
+  <button onclick="loginRedirect()">Login Redirect</button>
+  <button onclick="loginPopup()">Login Popup</button>
+  <button onclick="logout()">Logout</button>
+  <!-- The surrounding HTML is left untouched by FirebaseUI.
+       Your app may use that space for branding, controls and other customizations.-->
+  <h1>Welcome to My Awesome App</h1>
+  <div id="firebaseui-auth-container"></div>
+  <div id="loader">Loading...</div>
+  <script>
+    try {
+      // Temp variable to hold the anonymous user data if needed.
+      var data = null;
+      // Hold a reference to the anonymous current user.
+      
+      var anonymousUser = firebase.auth().currentUser;
+      const uiConfig = {
+        // Whether to upgrade anonymous users should be explicitly provided.
+        // The user must already be signed in anonymously before FirebaseUI is
+        // rendered.
+        autoUpgradeAnonymousUsers: true,
+        signInOptions: [
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID
+        ],
+        callbacks: {
+          // signInFailure callback must be provided to handle merge conflicts which
+          // occur when an existing credential is linked to an anonymous user.
+          signInFailure: function (error) {
+            // For merge conflicts, the error.code will be
+            // 'firebaseui/anonymous-upgrade-merge-conflict'.
+            if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+              return Promise.resolve();
+            }
+            // The credential the user tried to sign in with.
+            var cred = error.credential;
+            // Copy data from anonymous user to permanent user and delete anonymous
+            // user.
+            // ...
+            // Finish sign-in after data is copied.
+            return firebase.auth().signInWithCredential(cred);
+          }
+        }
+        // Other config options...
+      }
+      
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    
+      // Is there an email link sign-in?
+      if (ui.isPendingRedirect()) {
+        // The start method will wait until the DOM is loaded.
+        ui.start('#firebaseui-auth-container', uiConfig);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  </script>
   <noscript>
     <link rel="stylesheet" href="%PUBLIC_URL%/App.css">
 
@@ -50,7 +235,8 @@
           </h1>
           <p class="App-content">We provide an unique ecosystem of <strong><em>guided Entrepreneurship</em></strong> to
             help you become an Entrepreneur. <br />
-            <em>Fill-in the form below if you're interested and willing for <strong>Mentorship based Partnership.</strong></em>
+            <em>Fill-in the form below if you're interested and willing for <strong>Mentorship based
+                Partnership.</strong></em>
             <br />
             <span role="img" aria-label="scroll down">👇 👇 👇</span>
           </p>
